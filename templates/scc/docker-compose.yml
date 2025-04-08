@@ -1,0 +1,20 @@
+# simple docker-compose file for SAP Cloud Connector
+services:
+  sapcc:
+    image: sapcc
+    restart: unless-stopped
+    networks:
+    - default   
+    expose:
+    - "8443"
+    ports: 
+    - "8443:8443"    
+    volumes:
+    - sapcc_config:/opt/sap/scc/config
+    - sapcc_scc_config:/opt/sap/scc/scc_config
+    - sapcc_scc_logs:/opt/sap/scc/log
+
+volumes:
+  sapcc_config:
+  sapcc_scc_config:
+  sapcc_scc_logs:
