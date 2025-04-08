@@ -1,0 +1,371 @@
+[
+    {
+        "id": "93f5aac627859d8c",
+        "type": "tab",
+        "label": "mqttBridge",
+        "disabled": false,
+        "info": "Bridge to MQTT Broker",
+        "env": []
+    },
+    {
+        "id": "700cf86f17cf4400",
+        "type": "group",
+        "z": "93f5aac627859d8c",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "07ed89120d050b4a",
+            "8b2f47d6820069c0",
+            "8e30bad1008716f2",
+            "89c4dc1dfbc52b86",
+            "b8223043e8ad1cce",
+            "d328a4a4ab7dab5f",
+            "00c0d250f77b125f"
+        ],
+        "x": 34,
+        "y": 59,
+        "w": 1152,
+        "h": 182
+    },
+    {
+        "id": "0416e9a69ede2469",
+        "type": "group",
+        "z": "93f5aac627859d8c",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "aa7fa98821a5a27c",
+            "77cea0afa4110e88",
+            "30e2d751ee3eaf88",
+            "4e590d8cf682dd44",
+            "ee65f4740dbcf8b3",
+            "396cf46699f2377d",
+            "2a82a7dcd389b7bd",
+            "2b3464b61f3d651b"
+        ],
+        "x": 34,
+        "y": 319,
+        "w": 892,
+        "h": 242
+    },
+    {
+        "id": "07ed89120d050b4a",
+        "type": "mqtt in",
+        "z": "93f5aac627859d8c",
+        "g": "700cf86f17cf4400",
+        "name": "subscribe to all",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "fd4e07b902689da7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "8b2f47d6820069c0"
+            ]
+        ]
+    },
+    {
+        "id": "8b2f47d6820069c0",
+        "type": "function",
+        "z": "93f5aac627859d8c",
+        "g": "700cf86f17cf4400",
+        "name": "save to flow context",
+        "func": "let key     = \"mqttStorage\" \nlet topic   = msg.topic;\nlet payload = msg.payload;\nlet store   = flow.get(key)||{};\nconst now = new Date();\nconst isoString = now.toISOString();\n\nif (store == 'undefined') {\n    store = {}\n};\n\nlet value = {\n    \"payload\": payload,\n    \"topic\": topic,\n    \"qos\": msg.qos,\n    \"retain\": msg.retain,\n    \"timestamp\": isoString\n}\nstore[topic] = value;\nflow.set(key, store);\n\nmsg.payload = value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 100,
+        "wires": [
+            [
+                "8e30bad1008716f2"
+            ]
+        ]
+    },
+    {
+        "id": "8e30bad1008716f2",
+        "type": "debug",
+        "z": "93f5aac627859d8c",
+        "g": "700cf86f17cf4400",
+        "name": "mqtt store",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "89c4dc1dfbc52b86",
+        "type": "inject",
+        "z": "93f5aac627859d8c",
+        "g": "700cf86f17cf4400",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "b8223043e8ad1cce"
+            ]
+        ]
+    },
+    {
+        "id": "b8223043e8ad1cce",
+        "type": "function",
+        "z": "93f5aac627859d8c",
+        "g": "700cf86f17cf4400",
+        "name": "get flow context",
+        "func": "let key     = \"mqttStorage\" \nlet store   = flow.get(key)||{};\n\nmsg.payload = store;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "d328a4a4ab7dab5f"
+            ]
+        ]
+    },
+    {
+        "id": "d328a4a4ab7dab5f",
+        "type": "debug",
+        "z": "93f5aac627859d8c",
+        "g": "700cf86f17cf4400",
+        "name": "current store",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "aa7fa98821a5a27c",
+        "type": "http in",
+        "z": "93f5aac627859d8c",
+        "g": "0416e9a69ede2469",
+        "name": "mqttReceive",
+        "url": "/v1/mqttReceive",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 360,
+        "wires": [
+            [
+                "30e2d751ee3eaf88"
+            ]
+        ]
+    },
+    {
+        "id": "77cea0afa4110e88",
+        "type": "http response",
+        "z": "93f5aac627859d8c",
+        "g": "0416e9a69ede2469",
+        "name": "mqttReceive Answer",
+        "statusCode": "",
+        "headers": {},
+        "x": 800,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "30e2d751ee3eaf88",
+        "type": "function",
+        "z": "93f5aac627859d8c",
+        "g": "0416e9a69ede2469",
+        "name": "fill answer from flow context",
+        "func": "// prepare\nlet key = \"mqttStorage\"\nlet topic = msg.payload.topic;\nlet store = flow.get(key) || {};\n\nmsg.statusCode = 400\nmsg.payload = {\n    \"message\": \"invalid request\"\n}\n\n// check input\nif(topic == 'undefined' || topic == \"\"){\n    return msg;\n};\n\n// check storage\nif (store == 'undefined') {\n    msg.payload = {\n        \"message\": \"no values\"\n    }\n    return msg;\n};\n\n// get storage value\nlet value = store[topic];\nif(value == 'undefined'){\n    msg.payload = {\n        \"message\": \"topic not found\"\n    }\n    return msg;\n}\n\n// fill answer\nmsg.statusCode = 200\nmsg.payload = value;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 360,
+        "wires": [
+            [
+                "77cea0afa4110e88"
+            ]
+        ]
+    },
+    {
+        "id": "4e590d8cf682dd44",
+        "type": "http in",
+        "z": "93f5aac627859d8c",
+        "g": "0416e9a69ede2469",
+        "name": "mqttSend",
+        "url": "/v1/mqttSend",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 440,
+        "wires": [
+            [
+                "396cf46699f2377d"
+            ]
+        ]
+    },
+    {
+        "id": "ee65f4740dbcf8b3",
+        "type": "http response",
+        "z": "93f5aac627859d8c",
+        "g": "0416e9a69ede2469",
+        "name": "mqttSend Answer",
+        "statusCode": "",
+        "headers": {},
+        "x": 790,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "396cf46699f2377d",
+        "type": "function",
+        "z": "93f5aac627859d8c",
+        "g": "0416e9a69ede2469",
+        "name": "save to flow context",
+        "func": "let key     = \"mqttStorage\" \nlet topic   = msg.payload.topic;\nlet payload = msg.payload.payload;\nlet qos     = msg.payload.qos||0;\nlet retain  = msg.payload.retain||false;\n\nlet store   = flow.get(key)||{};\nconst now = new Date();\nconst isoString = now.toISOString();\n\nif (store == 'undefined') {\n    store = {}\n};\n\nlet value = {\n    \"payload\": payload,\n    \"topic\": topic,\n    \"qos\": qos,\n    \"retain\": retain,\n    \"timestamp\": isoString\n}\nstore[topic] = value;\nflow.set(key, store);\n\nmsg.payload = value;\nmsg.statusCode = 200\n\nmsg.mqtt = {\n    \"topic\": topic,\n    \"payload\": payload,\n    \"qos\": qos,\n    \"retain\": retain\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 440,
+        "wires": [
+            [
+                "ee65f4740dbcf8b3",
+                "2b3464b61f3d651b"
+            ]
+        ]
+    },
+    {
+        "id": "2a82a7dcd389b7bd",
+        "type": "mqtt out",
+        "z": "93f5aac627859d8c",
+        "g": "0416e9a69ede2469",
+        "name": "mqttSend",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fd4e07b902689da7",
+        "x": 800,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "2b3464b61f3d651b",
+        "type": "function",
+        "z": "93f5aac627859d8c",
+        "g": "0416e9a69ede2469",
+        "name": "set mqtt context",
+        "func": "\nreturn msg.mqtt;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 480,
+        "wires": [
+            [
+                "2a82a7dcd389b7bd"
+            ]
+        ]
+    },
+    {
+        "id": "00c0d250f77b125f",
+        "type": "comment",
+        "z": "93f5aac627859d8c",
+        "g": "700cf86f17cf4400",
+        "name": "",
+        "info": "",
+        "x": 1100,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "fd4e07b902689da7",
+        "type": "mqtt-broker",
+        "name": "Default MQTT Broker",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]

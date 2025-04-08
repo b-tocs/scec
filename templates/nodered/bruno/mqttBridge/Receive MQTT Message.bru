@@ -1,0 +1,17 @@
+meta {
+  name: Receive MQTT Message
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{endpoint}}/v1/mqttReceive
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "topic": "example/mytopic"
+  }
+}

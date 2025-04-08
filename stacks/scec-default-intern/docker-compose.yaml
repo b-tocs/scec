@@ -1,0 +1,47 @@
+services:
+
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    env_file:
+      - .env
+    restart: always
+    expose:
+      - 1883
+    ports:
+      - "1883:1883"
+    volumes:
+      - mosquitto-data:/mosquitto
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      
+
+  nodered:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=Europe/Amsterdam
+    expose:
+      - 1880
+    ports:
+      - "1880:1880"
+    volumes:
+      - node-red-data:/data  
+
+  sapcc:
+    image: ghcr.io/b-tocs/btocs_sapcc:latest
+    restart: unless-stopped
+    networks:
+      - default   
+    expose:
+      - "8443"
+    ports:
+      - "8443:8443"
+    volumes:
+      - sapcc-config:/opt/sap/scc/config
+      - sapcc-scc-config:/opt/sap/scc/scc_config
+      - sapcc-logs:/opt/sap/scc/log
+
+volumes:
+  mosquitto-data:
+  node-red-data:
+  sapcc-config:
+  sapcc-scc-config:
+  sapcc-logs:

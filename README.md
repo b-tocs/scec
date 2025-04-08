@@ -17,7 +17,7 @@ Status ALPHA
 
 | Component | default |  scco  | 
 | --------- | ------- | ------ |
-| traefik   |    X    |        |
+| traefik   |   (X)   |        |
 | nodered   |    X    |        |
 | mosquitto |    X    |        |
 | scc       |    X    |        |

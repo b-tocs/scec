@@ -1,0 +1,24 @@
+meta {
+  name: Send MQTT Message
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{endpoint}}/v1/mqttSend
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "topic": "example/mytopic",
+      "payload": {
+        "valueNumber": 10,
+        "valueText": "Test",
+        "valueBoolean": true
+      },
+      "qos": 0,
+      "retain": false
+  }
+}

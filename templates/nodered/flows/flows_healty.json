@@ -1,0 +1,56 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Health API",
+        "disabled": false,
+        "info": "Implement some REST APIs for testing and health check"
+    },
+    {
+        "id": "ec695f09b1129a40",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/ping",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 80,
+        "wires": [
+            [
+                "52a904ac8b36748b"
+            ]
+        ]
+    },
+    {
+        "id": "52a904ac8b36748b",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "create answer",
+        "func": "msg.payload = {\n    \"result\": \"answer from nodered\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 80,
+        "wires": [
+            [
+                "695c755f791ad69e"
+            ]
+        ]
+    },
+    {
+        "id": "695c755f791ad69e",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 720,
+        "y": 80,
+        "wires": []
+    }
+]
