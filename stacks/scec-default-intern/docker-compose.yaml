@@ -46,11 +46,11 @@ services:
       - "8086:8086"
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
-      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: secret-admin-token-scec   # Initial admin token for the user
-      DOCKER_INFLUXDB_INIT_USERNAME: scec                        # Initial username for the user
-      DOCKER_INFLUXDB_INIT_PASSWORD: administrator                # Initial password for the user
-      DOCKER_INFLUXDB_INIT_ORG: scec                              # Initial organization name
-      DOCKER_INFLUXDB_INIT_BUCKET: nodered                        # Initial bucket name 
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_INIT_ADMIN_TOKEN}   # Initial admin token for the user
+      DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_INIT_ORG}                   # Initial organization name
+      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_INIT_BUCKET}             # Initial bucket name 
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_INIT_USERNAME}         # Initial username for the user
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_INIT_PASSWORD}         # Initial password for the user
       #DOCKER_INFLUXDB_INIT_RETENTION: 1w
     volumes:
       - influxdb-storage:/var/lib/influxdb2:rw

@@ -1,6 +1,0 @@
-# enter your domain and admin Email for Letsencrypt
-DOMAIN_NAME=yourdomain.com
-ADMIN_EMAIL=admin@yourdomain.com
-
-# nodered settings
-NODERED_TIMEZONE=Europe/Amsterdam
