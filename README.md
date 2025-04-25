@@ -2,43 +2,7 @@
 
 Simple IoT Stack for Docker Conpose to connect an edge scenario to SAP BTP.
 
-Status ALPHA
-
-# Variants and Components
-
-## Available variants
-
-| variant | description                                     |
-| ------- | ----------------------------------------------- |
-| default | Default: scc + mosquitto + nodered              |
-
-
-## Used components matrix
-
-| Component | default |  scco  | 
-| --------- | ------- | ------ |
-| traefik   |   (X)   |        |
-| nodered   |    X    |        |
-| mosquitto |    X    |        |
-| scc       |    X    |        |
-| influxdb  |         |        |
-| kafka     |         |        |
-| kafka-ui  |         |        |
-
-
-# Documentation
-
-- Templates
-    - [SAP Cloud Connector](templates/scc/README.md)
-
-
-# Prereqisites
-
-The following tools are used:
-- Docker
-- Make
-
-Install the required tools for your platform.
+Status ALPHA - no security. Use local only 
 
 
 # Thank You!
