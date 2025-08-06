@@ -3,7 +3,7 @@ services:
     image: eclipse-mosquitto:latest
     env_file:
       - .env
-    restart: always
+    restart: unless-stopped
     expose:
       - 1883
     ports:
@@ -69,7 +69,7 @@ services:
       - zookeeper-data:/bitnami/zookeeper
  
   kafka:
-    image: bitnami/kafka:latest
+    image: bitnami/kafka:3.9
     restart: unless-stopped
     expose:
       - "9092"
